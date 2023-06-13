@@ -1,0 +1,13 @@
+# 拡張子が .pyc のファイル・ディレクトリにマッチ
+*.pyc
+
+# 下記名前ファイルにマッチ
+__pycache__
+local_settings.py
+
+# logs フォルダは要らない
+logs/
+
+# 拡張子が .sqlite3 のファイル・ディレクトリにマッチ
+*.sqlite3
+

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}契約確定 | Confirm Insurance{% endblock %}
+
+{% block active_diary_list %}active{% endblock %}
+
+
+{% block contents %}
+<div class="container">
+    <div class="my-div-style w-100">
+        <div class="row">
+            <div class="col-3">
+                <strong>証券番号</strong>
+            </div>
+            <div class="col-9">
+                <p>{{ pol_no }}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-3">
+                <strong>契約者名</strong>
+            </div>
+            <div class="col-9">
+                <p>{{ name }}</p>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <strong>メールアドレス</strong>
+            </div>
+            <div class="col-9">
+                <p>{{email}}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-3">
+                <strong>店舗名</strong>
+            </div>
+            <div class="col-9">
+                <p>{{ store_name }}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-3">
+                <strong>保険料</strong>
+            </div>
+            <div class="col-9">
+                <p>{{ price }}円 </p>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <hr>
+
+        <div class="row">
+            <div class="col-3">
+                <strong>支払URL</strong>
+            </div>
+            <div class="col-9">
+                <a href="{{ paypay_url }}">{{ paypay_url }} </a>
+            </div>
+        </div>
+        <a class="btn btn-light mt-5 ml-2 mb-3" href="{% url 'ec:index' %}">戻る</a>
+</div>
+{% endblock %}
