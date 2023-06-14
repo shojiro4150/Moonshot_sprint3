@@ -87,6 +87,36 @@ class GetInsuranceForm(forms.Form):
         self.fields['message'].widget.attrs['class'] = 'form-control col-12'
         self.fields['message'].widget.attrs['placeholder'] = '備考をここに入力してください。'
 
+        # Socotraログイン
+    def send_socotra(self):
+        session = create_session_and_login()
+        policyholder_locator = '3db5507e-d66f-406b-be92-027b89d2b8fa'
+
+        # exposureの作成
+        exposure = self.create_exposure()
+        print(exposure)
+
+        # policyの作成
+        policy = {
+            "policyholderLocator": policyholder_locator,
+            "productName": 'ビアガーデン経営者向け天候パラメトリック保険',
+            "exposures": [exposure]
+        }
+
+        response = session.post('https://api.sandbox.socotra.com/policy',
+                                json=policy)
+
+        response1_json = response.json()
+        GetInsuranceForm.policyLocator = response1_json['characteristics'][0]['policyLocator']
+
+        print(GetInsuranceForm.policyLocator)
+
+        #Policy Issue
+        #response2 = session.post(
+        #    'https://api.sandbox.socotra.com/policy/' + policyLocator + '/issue',
+        #    )
+        #response2_json = response.json()
+
     def create_exposure(self):
         # Create an exposure with two perils
         name = self.cleaned_data['name']
@@ -114,39 +144,6 @@ class GetInsuranceForm(forms.Form):
         GetInsuranceForm.email = email
 
         return exposure # policyLocatorを追加して返す
-
-        # ホスト名取得（引数）
-        # Socotraログイン
-    def send_socotra(self):
-        session = create_session_and_login()
-        policyholder_locator = '3db5507e-d66f-406b-be92-027b89d2b8fa'
-
-        exposure = self.create_exposure()
-        print(exposure)
-
-        policy = {
-            "policyholderLocator": policyholder_locator,
-            "productName": 'ビアガーデン経営者向け天候パラメトリック保険',
-            "exposures": [exposure]
-        }
-
-        response = session.post('https://api.sandbox.socotra.com/policy',
-                                json=policy)
-
-        response1_json = response.json()
-        GetInsuranceForm.policyLocator = response1_json['characteristics'][0]['policyLocator']
-
-
-
-        print(GetInsuranceForm.policyLocator)
-"""
-        #Policy Issue
-        response2 = session.post(
-            'https://api.sandbox.socotra.com/policy/' + policyLocator + '/issue',
-            )
-        response2_json = response.json()
-"""
-
 
 class InquiryForm(forms.Form):
     name = forms.CharField(label='お名前', max_length=30)

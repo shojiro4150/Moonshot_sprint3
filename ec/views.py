@@ -3,11 +3,8 @@ import logging
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
-
 from .forms import InquiryForm,GetInsuranceForm
-from .models import Diary
 from .import confirm
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 logger = logging.getLogger(__name__)
@@ -25,7 +22,6 @@ class GetInsuranceView(generic.FormView):
         messages.success(self.request, '登録完了しました。')
         return super().form_valid(form)
 
-
 class ConfirmInsuranceView(generic.TemplateView):
     template_name = 'confirm_insurance.html'
   
@@ -41,7 +37,6 @@ class ConfirmInsuranceView(generic.TemplateView):
         context['paypay_url'] = found_policy[1]
 
         return context
-
 
 class InquiryView(generic.FormView):
     template_name = "inquiry.html"
